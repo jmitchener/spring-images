@@ -1,0 +1,54 @@
+@highlight-color: #FEB41C;
+@dark-color: #24221F;
+@background-color: #fff;
+@base-color: #4B5F6D;
+@light-color: #5E7C88;
+@dark-color: #363F45;
+
+body {
+  font-family: sans-serif;
+  color: @dark-color;
+}
+
+div#topmenu {
+  a {
+    padding: 5px;
+    background-color: @dark-color;
+    color: @background-color;
+    
+    font-family: sans-serif;
+    
+    text-decoration: none;
+    font-weight: bold;
+
+    &:hover {
+      background-color: @highlight-color;
+    }
+  }
+
+  ul {
+    list-style: none;
+
+    li {
+      margin: 0;
+      padding: 0;
+      display: inline-block;
+    }
+  }
+}
+
+div.image-thumbnail {
+  display: inline-block;
+  margin-left: 5px;
+  
+  a {
+    img {
+      opacity: 0.5;
+      box-shadow: 5px 5px 5px #666;
+    }
+
+    &:hover img {
+      opacity: 1;
+    }
+  }
+}
