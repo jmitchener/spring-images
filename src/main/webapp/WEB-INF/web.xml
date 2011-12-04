@@ -29,5 +29,10 @@
         <servlet-name>appServlet</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+    
+    <mime-mapping>
+        <extension>less</extension>
+        <mime-type>text/css</mime-type>
+    </mime-mapping>
 
 </web-app>

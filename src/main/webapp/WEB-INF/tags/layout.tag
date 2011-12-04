@@ -15,9 +15,9 @@
         
         <jsp:invoke fragment="head" />
         
-        <link rel="stylesheet/less" href="${pageContext.request.contextPath}/css/application.css" />
+        <link rel="stylesheet/less" href="${pageContext.request.contextPath}/css/application.less" />
         <c:forTokens var="file" items="${style}" delims=",">
-            <link rel="stylesheet/less" href="${pageContext.request.contextPath}/css/${file}.css" />
+            <link rel="stylesheet/less" href="${pageContext.request.contextPath}/css/${file}.less" />
         </c:forTokens>
         <script src="${pageContext.request.contextPath}/js/less-1.1.5.min.js"></script>
         
