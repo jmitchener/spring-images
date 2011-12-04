@@ -52,36 +52,36 @@ import com.github.jmitchener.service.ImageService;
 @Controller
 @RequestMapping("/images")
 public class ImageController {
-    
+
     @Inject
     private ImageService imageService;
-    
+
     private static final Logger logger = LoggerFactory.getLogger(ImageController.class);
-    
+
     @RequestMapping
     public String getRecent(Model model) {
         model.addAttribute("recentImages", imageService.getRecent(10));
         return "/images/index";
     }
-    
+
     @RequestMapping(value = "/upload", method = RequestMethod.GET)
     public String uploadForm(Locale locale, Model model) {
         logger.info("GET /images/upload");
-        
+
         return "/images/upload";
     }
-    
+
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String getInfo(@PathVariable Long id,
                           Model model)
     {
         Image img = imageService.find(id);
-        
+
         if (img == null)
             throw new ResourceNotFoundException();
-        
+
         model.addAttribute("image", img);
-        
+
         return "/images/show";
     }
 
@@ -90,10 +90,10 @@ public class ImageController {
                          HttpServletResponse resp)
     {
         Image img = imageService.find(id);
-        
+
         if (img == null)
             throw new ResourceNotFoundException();
-        
+
         try {
             resp.setContentType(img.getContentType());
             resp.getOutputStream().write(img.getData());
@@ -101,16 +101,16 @@ public class ImageController {
             logger.error("Couldn't write image to OutputStream", e);
         }
     }
-    
+
     @RequestMapping(value = "/{id}/thumbnail", method = RequestMethod.GET)
     public void getThumbnail(@PathVariable Long id, HttpServletResponse resp)
         throws IOException
     {
         Image img = imageService.find(id);
-        
+
         if (img == null)
             throw new ResourceNotFoundException();
-        
+
         resp.setContentType(img.getContentType());
         resp.getOutputStream().write(img.getThumbnail());
     }
@@ -120,29 +120,29 @@ public class ImageController {
                          Model model)
     {
         logger.info("POST /images/upload");
-        
+
         try {
             for (MultipartFile file : files) {
                 if (!file.isEmpty()) {
-                    
+
                     Image img = new Image();
-                    
+
                     img.setData(file.getBytes());
                     img.setContentType(file.getContentType());
-                    
+
                     imageService.save(img);
                 }
             }
-            
+
             return "redirect:/images";
         } catch (MaxUploadSizeExceededException e) {
             logger.debug("Max upload size exceeded!");
         } catch (IOException e) {
             logger.error("Failed to read uploaded image", e);
-            
+
             throw new RuntimeException("Could not process upload. Please try again.");
         }
-        
+
         return "/images/uploadFailure";
     }
 }

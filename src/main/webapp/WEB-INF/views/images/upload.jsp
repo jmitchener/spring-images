@@ -1,6 +1,6 @@
 <%@ include file="../includes.jsp"%>
 
-<my:layout title="Upload a new image">
+<m:layout title="Upload a new image">
     <h1>Please upload a file</h1>
     
     <form method="post" enctype="multipart/form-data">
@@ -10,4 +10,4 @@
         
         <input type="submit" />
     </form>
-</my:layout>
+</m:layout>
