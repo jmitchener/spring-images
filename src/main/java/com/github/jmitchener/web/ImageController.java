@@ -58,8 +58,10 @@ public class ImageController {
 
     private static final Logger logger = LoggerFactory.getLogger(ImageController.class);
 
-    @RequestMapping
+    @RequestMapping(method = RequestMethod.GET)
     public String getRecent(Model model) {
+        logger.info("GET /images");
+        
         model.addAttribute("recentImages", imageService.getRecent(10));
         return "/images/index";
     }
@@ -75,6 +77,8 @@ public class ImageController {
     public String getInfo(@PathVariable Long id,
                           Model model)
     {
+        logger.info("GET /images/{}", id);
+        
         Image img = imageService.find(id);
 
         if (img == null)
@@ -89,6 +93,8 @@ public class ImageController {
     public void getImage(@PathVariable Long id,
                          HttpServletResponse resp)
     {
+        logger.info("GET /images/{}/raw", id);
+        
         Image img = imageService.find(id);
 
         if (img == null)
@@ -106,6 +112,8 @@ public class ImageController {
     public void getThumbnail(@PathVariable Long id, HttpServletResponse resp)
         throws IOException
     {
+        logger.info("GET /images/{}/thumbnail", id);
+        
         Image img = imageService.find(id);
 
         if (img == null)
