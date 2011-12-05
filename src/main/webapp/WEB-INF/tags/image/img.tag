@@ -1,4 +1,4 @@
-<%@ tag description="Display an image thumbnail" %>
+<%@ tag description="Display an image" %>
 
 <%@ attribute name="src" required="true" type="com.github.jmitchener.model.Image" %>
 
