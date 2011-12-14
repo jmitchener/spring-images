@@ -56,7 +56,10 @@ import com.github.jmitchener.model.Image;
 import com.github.jmitchener.service.ImageService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:test-context.xml")
+@ContextConfiguration({
+    "file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml",
+    "file:src/main/webapp/WEB-INF/spring/root-context.xml"
+})
 public class ImageControllerTest {
     
     private static final Logger logger = LoggerFactory.getLogger(ImageControllerTest.class);
