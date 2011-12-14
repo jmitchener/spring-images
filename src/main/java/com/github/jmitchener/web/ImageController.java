@@ -57,6 +57,12 @@ public class ImageController {
     private ImageService imageService;
 
     private static final Logger logger = LoggerFactory.getLogger(ImageController.class);
+    
+    public ImageController() {}
+    
+    public ImageController(ImageService imageService) {
+        this.imageService = imageService;
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     public String getRecent(Model model) {
