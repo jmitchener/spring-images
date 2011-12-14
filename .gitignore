@@ -4,8 +4,6 @@ target/
 # H2
 springimages.h2.db
 springimages.lock.db
-springimages-test.h2.db
-springimages-test.lock.db
 
 # Eclipse
 .project
