@@ -52,6 +52,12 @@ public class ImageServiceImpl implements ImageService {
 
     @Inject
     private ImageRepository repo;
+    
+    public ImageServiceImpl() {}
+    
+    public ImageServiceImpl(ImageRepository repo) {
+        this.repo = repo;
+    }
 
     public Image find(Long id) {
         return repo.find(id);
