@@ -28,10 +28,7 @@ package com.github.jmitchener.service;
 
 import java.util.List;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import com.github.jmitchener.model.Image;
-import com.github.jmitchener.repository.ImageRepository;
 
 public interface ImageService {
 
