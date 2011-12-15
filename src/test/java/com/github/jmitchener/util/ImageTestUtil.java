@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Jim Mitchener <jcm@packetpan.org>
+ * Copyright (c) 2011 Jim C. Mitchener <jcm@packetpan.org>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -24,55 +24,48 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.github.jmitchener.repository;
+package com.github.jmitchener.util;
 
-import java.util.Collection;
-import java.util.List;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Date;
 
 import com.github.jmitchener.model.Image;
 
-public interface ImageRepository {
-
-    /**
-     * Find an image by its id.
-     */
-    public Image find(long id);
+public class ImageTestUtil {
     
     /**
-     * Find all images.
+     * Returns a new Image instance that passes validations.
      */
-    public List<Image> findAll();
-
-    /**
-     * Save a new image or update an existing one.
-     * 
-     * @param img Image to save/update
-     * 
-     * @return The persisted image.
-     */
-    public Image save(Image img);
+    public static Image getValidImage() throws IOException {
+        Image image = new Image(loadSamplePNG());
+        
+        image.setDate(new Date());
+        image.setContentType("image/png");
+        
+        return image;
+    }
     
-    /**
-     * Save or update a collection of images.
-     * 
-     * @param images Collection of Images to save or update.
-     */
-    public void save(Collection<Image> images);
-    
-    /**
-     * Delete an image from the database.
-     * 
-     * @param image Image to be deleted
-     */
-    public void delete(Image image);
-
-    /**
-     * Get a list of the most recent images.
-     *
-     * @param count The number of images to return.
-     *
-     * @return A list of recent images.
-     */
-    public List<Image> getRecent(int count);
-
+    public static byte[] loadSamplePNG() throws IOException {
+        InputStream is = ImageTestUtil.class.getResourceAsStream("/sample-image.png");
+        
+        ByteArrayOutputStream os = new ByteArrayOutputStream(1024);
+        byte[] buf = new byte[512];
+     
+        // Read bytes from the input stream in bytes.length-sized chunks and write
+        // them into the output stream
+        int readBytes;
+        while ((readBytes = is.read(buf)) > 0) {
+            os.write(buf, 0, readBytes);
+        }
+     
+        // Convert the contents of the output stream into a byte array
+        byte[] data = os.toByteArray();
+        
+        is.close();
+        os.close();
+        
+        return data;
+    }
 }

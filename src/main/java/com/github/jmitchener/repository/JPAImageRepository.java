@@ -26,9 +26,11 @@
  */
 package com.github.jmitchener.repository;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NamedQueries;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -40,6 +42,12 @@ import com.github.jmitchener.model.Image;
 public class JPAImageRepository implements ImageRepository {
     @PersistenceContext
     private EntityManager entityManager;
+
+    @SuppressWarnings("unchecked")
+    public List<Image> findAll() {
+        Query q = entityManager.createQuery("SELECT img FROM Image img ORDER BY img.date desc");
+        return q.getResultList();
+    }
 
     public Image find(long id) {
         return entityManager.find(Image.class, id);
@@ -61,5 +69,14 @@ public class JPAImageRepository implements ImageRepository {
         } else {
             return entityManager.merge(img);
         }
+    }
+
+    public void delete(Image image) {
+        entityManager.remove(image);
+    }
+
+    public void save(Collection<Image> images) {
+        for (Image image : images)
+            save(image);
     }
 }

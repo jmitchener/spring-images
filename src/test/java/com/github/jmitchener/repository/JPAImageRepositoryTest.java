@@ -24,74 +24,75 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.github.jmitchener.service;
+package com.github.jmitchener.repository;
 
-import static com.github.jmitchener.util.ImageTestUtil.loadSamplePNG;
+import static com.github.jmitchener.util.ImageTestUtil.getValidImage;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import org.junit.Before;
+import javax.inject.Inject;
+
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.github.jmitchener.model.Image;
-import com.github.jmitchener.repository.ImageRepository;
 
-public class ImageServiceTest {
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration({
+    "file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml",
+    "file:src/main/webapp/WEB-INF/spring/root-context.xml"
+})
+@Transactional
+public class JPAImageRepositoryTest {
     
-    private ImageService service;
+    @Inject
     private ImageRepository repo;
     
-    @Before
-    public void setUp() {
-        repo = mock(ImageRepository.class);
-        service = new ImageServiceImpl(repo);
-    }
-
     @Test
-    public void testFindImageById() {
-        Image img = new Image();
-        
-        when(repo.find(1L)).thenReturn(img);
-        
-        Image ret = service.find(1L);
-        
-        verify(repo).find(1L);
-        
-        assertEquals(img, ret);
+    public void testFindAll() throws IOException {
+        assertEquals(0, repo.findAll().size());
     }
     
     @Test
-    public void testFindRecent() {
-        List<Image> images = new ArrayList<Image>();
+    public void testSave() throws IOException {
+        Image image = getValidImage();
         
-        for (int i = 0; i < 5; i++)
-            images.add(new Image());
+        repo.save(image);
         
-        when(repo.getRecent(5)).thenReturn(images);
-        
-        List<Image> ret = service.getRecent(5);
-        
-        verify(repo).getRecent(5);
-        
-        assertEquals(5, ret.size());
-        assertEquals(images, ret);
+        assertNotNull(image.getId());
+        assertEquals(1, repo.findAll().size());
     }
 
     @Test
-    public void testSave() throws IOException {
-        Image image = new Image(loadSamplePNG());
-
-        service.save(image);
-
-        verify(repo).save(image);
+    public void testDelete() throws IOException {
+        Image image = getValidImage();
         
-        assertNotNull(image.getThumbnail());
+        repo.save(image);
+        
+        assertEquals(1, repo.findAll().size());
+        
+        repo.delete(image);
+        
+        assertEquals(0, repo.findAll().size());
+    }
+    
+    @Test
+    public void testSaveCollection() throws IOException {
+        List<Image> _images = new ArrayList<Image>();
+        
+        for (int i = 0; i < 2; i++)
+            _images.add(getValidImage());
+        
+        repo.save(_images);
+        
+        assertEquals(2, repo.findAll().size());
     }
 }
