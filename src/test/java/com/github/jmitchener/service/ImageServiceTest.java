@@ -84,14 +84,14 @@ public class ImageServiceTest {
         assertEquals(5, ret.size());
         assertEquals(images, ret);
     }
-    
+
     @Test
-    public void testSaveGeneratesThumbnail() throws IOException {
-        byte[] data = loadSamplePNG();
-        Image image = new Image();
-        image.setData(data);
-        
+    public void testSave() throws IOException {
+        Image image = new Image(loadSamplePNG());
+
         service.save(image);
+
+        verify(repo).save(image);
         
         assertNotNull(image.getThumbnail());
     }

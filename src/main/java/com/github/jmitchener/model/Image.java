@@ -64,6 +64,12 @@ public class Image implements Serializable {
     @Lob
     @Column
     private byte[] thumbnail;
+    
+    public Image(byte[] data) {
+        setData(data);
+    }
+    
+    public Image() {}
 
     public byte[] getData() {
         return data;
