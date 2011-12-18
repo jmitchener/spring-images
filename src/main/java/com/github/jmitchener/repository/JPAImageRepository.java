@@ -30,7 +30,6 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NamedQueries;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 

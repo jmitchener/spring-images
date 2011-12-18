@@ -42,6 +42,8 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class Image implements Serializable {
 
+    private static final long serialVersionUID = -8613484747022876124L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

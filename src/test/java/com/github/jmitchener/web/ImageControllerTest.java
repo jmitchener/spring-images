@@ -41,8 +41,6 @@ import javax.inject.Inject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -62,8 +60,6 @@ import com.github.jmitchener.service.ImageService;
 })
 public class ImageControllerTest {
     
-    private static final Logger logger = LoggerFactory.getLogger(ImageControllerTest.class);
-
     @Inject
     private ApplicationContext appCtx;
 
